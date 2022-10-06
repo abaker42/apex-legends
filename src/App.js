@@ -26,16 +26,7 @@ function App() {
 					throw new Error('Username/Platform invalid!');
 				}
 				const data = await resp.json();
-				console.log(data);
-				// const transformData = data.results.map((stats) => {
-				// 	return {
-				// 		userName: stats.global.name,
-				// 		platform: stats.global.platform,
-				// 		rankName: data.global.rank.rankName,
-				// 		rankDiv: data.global.rank.rankDiv,
-				// 		//lastLegend: legends.selected.LegendName,
-				// 	};
-				//});
+				console.log(data); //keeping to see what other data I want to pull
 
 				setTransData({
 					userName: data.global.name,
@@ -43,12 +34,6 @@ function App() {
 					rankName: data.global.rank.rankName,
 					rankDiv: data.global.rank.rankDiv,
 				});
-
-				console.log(transData);
-				const playerData = [];
-				for (const key in data) {
-					playerData.push();
-				}
 			} catch (error) {
 				setError(error.message);
 			}
@@ -61,12 +46,16 @@ function App() {
 	return (
 		<Fragment>
 			<h2>Welcome to Apex</h2>
-			<Player
-				userName={transData.userName}
-				platform={transData.platform}
-				rankName={transData.rankName}
-				rankDiv={transData.rankDiv}
-			/>
+			{isLoading ? (
+				<p>Loading...</p>
+			) : (
+				<Player
+					userName={transData.userName}
+					platform={transData.platform}
+					rankName={transData.rankName}
+					rankDiv={transData.rankDiv}
+				/>
+			)}
 		</Fragment>
 	);
 }
